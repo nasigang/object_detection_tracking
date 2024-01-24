@@ -16,10 +16,12 @@ Before fine-tuning, it's essential to convert the BDD100K dataset into COCO form
 2. Set up a Python environment and install required dependencies.
 3. [Download BDD100K images](https://bdd-data.berkeley.edu/) and labels for object detection.
 4. Use a provided script to convert BDD100K labels to COCO annotation format, specifying the appropriate dataset partition (`train` or `val`).
-   ``` mkdir bdd100k/coco_labels
-       python -m bdd100k.label.to_coco -m det \
+   ```
+    mkdir bdd100k/coco_labels
+    python -m bdd100k.label.to_coco -m det \
           -i bdd100k/labels/det_20/det_${SET_NAME}.json \
-          -o bdd100k/coco_labels/det_${SET_NAME}_coco.json ```
+          -o bdd100k/coco_labels/det_${SET_NAME}_coco.json
+   ```
 
 ### Fine-Tuning Process
 After preparing the dataset, follow these steps to fine-tune a COCO pre-trained SSD model:
@@ -54,25 +56,28 @@ object_detection_and_tracking/ ├── README.md ├── configs/ │ ├─
 To get started with this project, follow these steps:
 
 1. Clone this repository to your local machine:
-```git clone https://github.com/nasigang/object_detection_tracking```
+```
+git clone https://github.com/nasigang/object_detection_tracking
+```
 
-2. Build a Docker image and create a container from the Docker image (recommended):
-``` docker build -t track:v1 -f docker/Dockerfile .
-docker run -v $(pwd):/workspace -it --rm --ipc host track:v1 ```
+3. Build a Docker image and create a container from the Docker image (recommended):
+```
+docker build -t track:v1 -f docker/Dockerfile .
+docker run -v $(pwd):/workspace -it --rm --ipc host track:v1
+```
 
-3. Download the trained SSD model on BDD100K dataset from the following link: [vgg16_caffe](https://download.openmmlab.com/pretrain/third_party/vgg16_caffe-292e1171.pth),
-
-or you can train on your own with `train.py` in SSD folder in this repository.
+3. Download the trained SSD model on BDD100K dataset from the following link: [vgg16_caffe](https://download.openmmlab.com/pretrain/third_party/vgg16_caffe-292e1171.pth), or you can train on your own with `train.py` in SSD folder in this repository.
 
 4. Download the input video "tokyo.mp4" from the following link: [tokyo.mp4](https://drive.google.com/file/d/14MHmg6zaMcg3eqfgvhjzrYSWGczjMwIN/view)
-
 5. Convert the trained mmdetection model to TensorRT:
-```python3 convert_tensorrt.py --config configs/yolox_x_8x8_300e_coco.py --checkpoint /path/to/checkpoint_file --save_path /save/path --device 'cuda:0' --fp16 True ```
-
-6. Modify the configuration file inference.yaml to match your hyperparameters and input paths.
-
-7. Start inference by running the following code:
-```python3 inference.py --infer_cfg inference.yaml```
+```
+python3 convert_tensorrt.py --config configs/yolox_x_8x8_300e_coco.py --checkpoint /path/to/checkpoint_file --save_path /save/path --device 'cuda:0' --fp16 True
+```
+7. Modify the configuration file inference.yaml to match your hyperparameters and input paths.
+8. Start inference by running the following code:
+```
+python3 inference.py --infer_cfg inference.yaml
+```
 
 ## Algorithm
 The algorithm used in this project is based on the following papers:
