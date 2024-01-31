@@ -50,7 +50,7 @@ This summarized guide should streamline the fine-tuning process, enabling you to
 
 ## Project Structure
 
-```object_detection_and_tracking/
+object_detection_and_tracking/
 ├── README.md
 ├── configs/
 │ ├── base/
