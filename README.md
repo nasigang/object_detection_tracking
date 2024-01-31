@@ -1,4 +1,4 @@
-# Real-Time Object Detection and Tracking with SORT Algorithm, Kalman Filter using TensorRT
+# Real-Time Object Detection and Tracking
 
 ​<light>This repository contains a project that implements real-time object detection and tracking using a COCO pre-trained SSD model fine-tuned on the BDD100K dataset.</light> The project leverages the SORT (Simple Online and Realtime Tracking) algorithm, Kalman Filter, and TensorRT for optimized performance.
 
