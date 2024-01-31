@@ -49,7 +49,7 @@ This summarized guide should streamline the fine-tuning process, enabling you to
 
 
 ## Project Structure
-
+```
 object_detection_and_tracking/
 ├── README.md
 ├── configs/
@@ -77,7 +77,8 @@ object_detection_and_tracking/
 ├── inference.yaml
 ├── process.py
 ├── tracker.py
-└── utils.py ```
+└── utils.py
+```
 
 ## Getting Started 
 To get started with this project, follow these steps:
