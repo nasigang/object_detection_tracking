@@ -4,11 +4,12 @@ import cv2
 
 
 def calc_iou(bboxes1: np.ndarray, bboxes2: np.ndarray) -> float:
-    """Calculates the intersection of union of given two bounding box arrays in a vectorized way.
+    """
+    Calculates the intersection of union of given two bounding box arrays in a vectorized way.
 
     Args:
-        bboxes1 (np.ndarray): The first array of bounding boxes.
-        bboxes2 (np.ndarray): The second array of bounding boxes.
+        bboxes1 (np.ndarray): The first array of bounding boxes. [ x1, y1, x2, y2 ]
+        bboxes2 (np.ndarray): The second array of bounding boxes.[ x1, y1, x2, y2 ]
 
     Returns:
         float: The intersection over union.
@@ -23,7 +24,8 @@ def calc_iou(bboxes1: np.ndarray, bboxes2: np.ndarray) -> float:
     boxAArea = (x12 - x11 + 1) * (y12 - y11 + 1)
     boxBArea = (x22 - x21 + 1) * (y22 - y21 + 1)
     
-    if not (boxAArea + np.transpose(boxBArea) - interArea).all():
+    # nothing intersected 
+    if not (boxAArea + np.transpose(boxBArea) - interArea).all(): 
         return np.zeros((len(bboxes1),len(bboxes2)),dtype=np.float32)
     
     iou = interArea / (boxAArea + np.transpose(boxBArea) - interArea)
@@ -32,7 +34,8 @@ def calc_iou(bboxes1: np.ndarray, bboxes2: np.ndarray) -> float:
 
 def draw_boxes(img: np.ndarray, box: List[int], thickness: int, class_names: Tuple[str], label: int, 
                score: float, colors: List[Tuple[int]], font: int=1) -> np.ndarray:
-    """Draws bounding boxes on the image.
+    """
+    Draws bounding boxes on the image.
 
     Args:
         img (np.ndarray): The image.
@@ -50,7 +53,7 @@ def draw_boxes(img: np.ndarray, box: List[int], thickness: int, class_names: Tup
     color = colors[label]
     pos = np.array([box[1], box[0]]) - thickness
 
-
+    print(f'inference.py, class_names {class_names[label]}\n')
     label_text =f'{class_names[label]}'
     
     label_text += f'| {score:.02f}'
@@ -58,7 +61,7 @@ def draw_boxes(img: np.ndarray, box: List[int], thickness: int, class_names: Tup
     pt1 = (int(box[1]), int(box[0]))
     pt2 = (int(box[3]), int(box[2]))
     cv2.rectangle(img,pt1,pt2,color,2)
-    text_size, _ = cv2.getTextSize(label_text, font, 0.8, 1)
+    text_size, _ = cv2.getTextSize(label_text, font, 1.1, 1)
 
     text_w, text_h = text_size
     text_w += 2
@@ -67,6 +70,6 @@ def draw_boxes(img: np.ndarray, box: List[int], thickness: int, class_names: Tup
     x, y = pos
 
     cv2.putText(img, label_text, (x, y + text_h ), font, 
-            0.8, color, 1, cv2.LINE_AA)
+            1.1, color, 1, cv2.LINE_AA)
     
     return img

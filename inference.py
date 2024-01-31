@@ -12,7 +12,8 @@ import yaml
 
 def process_frame(img: np.ndarray, detector: Callable, frame_count: int, max_age: int, min_hits: int, tracker_list: List, 
                   track_id_list: deque, colors: List[Tuple[int]], num_skip_frame: int, iou_thr: float=0.3) -> np.ndarray:
-    """The function which processes the frame, detects the objects and tracks them.
+    """
+    The function which processes the frame, detects the objects and tracks them.
 
     Args:
         img (np.ndarray): Input image.
@@ -43,6 +44,7 @@ def process_frame(img: np.ndarray, detector: Callable, frame_count: int, max_age
         for trk in tracker_list:
             x_box.append(trk.box)
 
+    print(f'inference.py, tracker_list {tracker_list}\n')
     matched, unmatched_dets, unmatched_trks = assign_detections_to_trackers(x_box, z_box, iou_thr = iou_thr)      
 
     if matched.size > 0:
@@ -55,9 +57,7 @@ def process_frame(img: np.ndarray, detector: Callable, frame_count: int, max_age
         process_unmatched_trackers(unmatched_trks, x_box, tracker_list)
 
     for trk in tracker_list:
-        
         if ((trk.hits >= min_hits) and (trk.no_losses <= max_age)):
-
              x_cv2 = trk.box
              label = trk.label
              score = trk.score
@@ -91,11 +91,15 @@ if __name__ == "__main__":
 
     track_id_list = deque(list(range(30)))
 
+    # # origin
+    # colors = [(255, 255, 0), (0, 255, 255), (241,101,72), (128, 128, 0), (128, 0, 128), (0, 0, 255), (128, 0, 128), (128, 0, 0),
+    #           (128, 0, 128), (255, 0, 255)]   
+    # class_names = ('pedestrian', 'rider', 'car', 'truck', 'bus', 'train', 'motorcycle', 'bicycle', 'traffic light', 'traffic sign')
+    
     colors = [(255, 255, 0), (0, 255, 255), (241,101,72), (128, 128, 0), (128, 0, 128), (0, 0, 255), (128, 0, 128), (128, 0, 0),
               (128, 0, 128), (255, 0, 255)]
-   
     class_names = ('pedestrian', 'rider', 'car', 'truck', 'bus', 'train', 'motorcycle', 'bicycle', 'traffic light', 'traffic sign')
-    
+
     detector = Detector(checkpoint_path=opt['detector']['checkpoint_path'], 
                         model_config_path=opt['detector']['config'],
                         score_thr=opt['detector']['score_thr'],

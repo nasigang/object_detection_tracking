@@ -5,8 +5,8 @@ from typing import Tuple, List
 
 class Detector:
     
-    def __init__(self, checkpoint_path: str='/workspaces/detection_and_tracking/yolox_xl_epoch_329_32-2map_trt.pth',
-                 model_config_path: str='/workspaces/detection_and_tracking/yolox_x_8x8_300e_coco.py',
+    def __init__(self, checkpoint_path: str='/workspace/odt/save/ssd300_best.pth',
+                 model_config_path: str='/workspace/odt/configs/ssd300_coco.py',
                  device: str='cuda:0',
                  score_thr: float=0.4,
                  class_names: List[str]=None) -> None:
@@ -14,15 +14,16 @@ class Detector:
 
         Args:
             checkpoint_path (str, optional): The checkpoint path of TensorRT module. Defaults to '/workspaces/detection_and_tracking/yolox_xl_epoch_329_32-2map_trt.pth'.
-            model_config_path (str, optional): The config path of the model. Defaults to '/workspaces/detection_and_tracking/yolox_x_8x8_300e_coco.py'.
+            model_config_path (str, optional): The config path of the detection model. Defaults to '/workspaces/detection_and_tracking/yolox_x_8x8_300e_coco.py'.
             device (_type_, optional): The device where object detection occurs. Defaults to 'cuda:0'.
             score_thr (float, optional): The confidence threshold of the TensorRT module. Defaults to 0.4.
             class_names (List[str]): The class names of the dataset.
         """
         
+        # Detector
         self.detector = create_wrap_detector(checkpoint_path, model_config_path, device)
         if class_names is not None:
-            self.detector.CLASSES = class_names
+            self.detector.CLASSES = class_names            
         self.score_thr = score_thr
 
     def detect_image(self, image: np.ndarray) -> Tuple:
@@ -34,6 +35,8 @@ class Detector:
         Returns:
             Tuple: Bounding boxes, labels and confidence scores.
         """
+        
+        # Image Detection with defined Detector
         result = inference_detector(self.detector, image)
         
         if isinstance(result, tuple):
@@ -44,7 +47,9 @@ class Detector:
         else:
             bbox_result, segm_result = result, None
             
-        bboxes = np.vstack(bbox_result)
+        bboxes = np.vstack(bbox_result) # x, y, w, h, score; w = resolution* w value
+
+        # 1D array of no. boxes with the value i
         labels = [
             np.full(bbox.shape[0], i, dtype=np.int32)
             for i, bbox in enumerate(bbox_result)
@@ -60,7 +65,7 @@ class Detector:
             labels = labels[inds]
             
 
-        bboxes = bboxes[:,:4]
+        bboxes = bboxes[:,:4]   
         new_boxes = np.empty_like(bboxes)
         new_boxes[:, 0], new_boxes[:, 1], new_boxes[:, 2], new_boxes[:, 3] = bboxes[:, 1], bboxes[:, 0], bboxes[:, 3], bboxes[:, 2]
 

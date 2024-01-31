@@ -4,11 +4,11 @@ tracker:
   skip_frame: 0
   iou_thr: 0.3
 detector:
-  checkpoint_path: 'save/yolox-xl-best.pth'
-  config: 'configs/yolox_x_8x8_300e_coco.py'
+  checkpoint_path: '/workspace/odt/save/ssd300_6epoch.pth'
+  config: '/workspace/odt/configs/ssd300_coco.py'
   score_thr: 0.4
 input_video: 'tokyo_1.mp4'
 save_video: True
-save_video_path: 'out.mp4'
+save_video_path: 'out_ssd6_tokyo.mp4'
 
 
