@@ -94,10 +94,11 @@ docker build -t track:v1 -f docker/Dockerfile .
 docker run -v $(pwd):/workspace -it --rm --ipc host track:v1
 ```
 
-3. Download the trained SSD model on BDD100K dataset from the following link: [vgg16_caffe](https://download.openmmlab.com/pretrain/third_party/vgg16_caffe-292e1171.pth), or you can train on your own with `train.py` in SSD folder in this repository.
+3. Download the trained SSD model on BDD100K dataset from the following link: [vgg16_caffe](https://download.openmmlab.com/pretrain/third_party/vgg16_caffe-292e1171.pth),
+   or you can train on your own with `train.py` in [SSD folder](https://github.com/nasigang/ssd/blob/main/README.md) or download the trained model on my own.
 
-4. Download the input video "tokyo.mp4" from the following link: [tokyo.mp4](https://drive.google.com/file/d/14MHmg6zaMcg3eqfgvhjzrYSWGczjMwIN/view)
-5. Convert the trained mmdetection model to TensorRT:
+5. Download the input video "tokyo.mp4" from the following link: [tokyo.mp4](https://drive.google.com/file/d/14MHmg6zaMcg3eqfgvhjzrYSWGczjMwIN/view)
+6. Convert the trained mmdetection model to TensorRT:
 ```
 python3 convert_tensorrt.py --config configs/yolox_x_8x8_300e_coco.py --checkpoint /path/to/checkpoint_file --save_path /save/path --device 'cuda:0' --fp16 True
 ```
