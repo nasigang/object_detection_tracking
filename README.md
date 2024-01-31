@@ -110,6 +110,7 @@ python3 inference.py --infer_cfg inference.yaml
 
 ## Algorithm
 The algorithm used in this project is based on the following papers:
+![algo](https://github.com/nasigang/object_detection_tracking/assets/112176462/39791caa-62f8-4698-9932-8b0c6ea7efbf)
 
 [Optimized Object Tracking Technique Using Kalman Filter](https://arxiv.org/abs/2103.05467)
 [Simple Online and Realtime Tracking](https://arxiv.org/abs/1602.00763)
