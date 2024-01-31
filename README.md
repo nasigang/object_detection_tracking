@@ -50,7 +50,34 @@ This summarized guide should streamline the fine-tuning process, enabling you to
 
 ## Project Structure
 
-object_detection_and_tracking/ ├── README.md ├── configs/ │ ├── base/ │ │ ├── schedules/ │ │ │ └── schedule_1x.py │ │ └── default_runtime.py │ ├── yolox_s_8x8_300e_coco.py │ └── yolox_x_8x8_300e_coco.py ├── docker/ │ └── Dockerfile ├── tests/ │ ├── test_process.py │ ├── test_tracker.py │ └── test_utils.py ├── LICENSE ├── convert_tensorrt.py ├── detector.py ├── inference.py ├── inference.yaml ├── process.py ├── tracker.py └── utils.py ```
+```object_detection_and_tracking/
+├── README.md
+├── configs/
+│ ├── base/
+│ │ ├── datasets/
+│ │ │ └── coco_detection.py
+│ │ ├── models/
+│ │ │ └── ssd300.py
+│ │ ├── schedules/
+│ │ │ └── schedule_2x.py
+│ │ └── default_runtime_ssd300.py
+│ ├── ssd300_coco.py
+├── docker/
+│ └── Dockerfile
+├── model/
+│ └── ssd300_best.pth
+├── tests/
+│ ├── test_process.py
+│ ├── test_tracker.py
+│ └── test_utils.py
+├── LICENSE
+├── convert_tensorrt.py
+├── detector.py
+├── inference.py
+├── inference.yaml
+├── process.py
+├── tracker.py
+└── utils.py ```
 
 ## Getting Started 
 To get started with this project, follow these steps:
