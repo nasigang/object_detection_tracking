@@ -110,20 +110,11 @@ python3 inference.py --infer_cfg inference.yaml
 
 ## Algorithm
 The algorithm used in this project is based on the following papers:
-![algo](https://github.com/nasigang/object_detection_tracking/assets/112176462/39791caa-62f8-4698-9932-8b0c6ea7efbf)
-
 [Optimized Object Tracking Technique Using Kalman Filter](https://arxiv.org/abs/2103.05467)
 [Simple Online and Realtime Tracking](https://arxiv.org/abs/1602.00763)
 
-The overall algorithm workflow is as follows:
+![algo](https://github.com/nasigang/object_detection_tracking/assets/112176462/39791caa-62f8-4698-9932-8b0c6ea7efbf)
 
-Association: Utilizes the Hungarian algorithm to match detectors and trackers using an IOU matrix.
-Detection: Employs a TensorRT module of the YOLOX-x model.
-min_hits: The number of consecutive frames where an object appears before a tracker is created, minimizing false positives. This parameter can be adjusted in the inference.yaml file.
-max_age: The number of consecutive frames that a tracked object can go undetected (e.g., the object may leave the frame). After max_age, the tracker is deleted.
-skip_frame: The number of frames that pass to the tracker without detection to decrease inference time.
-License
-This project is licensed under the LICENSE file in the repository.
 
 ## Acknowledgments
 This project was inspired by and based on the principles outlined in the aforementioned papers and utilizes the mmdetection-to-tensorrt repository for model conversion.
